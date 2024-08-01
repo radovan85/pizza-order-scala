@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<th:block th:fragment="fragmentContent">
+
+	<div class="container mt-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F; margin-bottom: 100px;'}">
+
+		<h3 class="d-flex justify-content-between align-items-center">
+			View User Details
+			<a th:onclick="redirectAllCustomers()" class="btn btn-success">
+				&larr; Back
+			</a>
+		</h3>
+		<br>
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<th>First Name:</th>
+					<td th:text="${user.firstName}"></td>
+				</tr>
+				<tr class="table-success">
+					<th>Last Name:</th>
+					<td th:text="${user.lastName}"></td>
+				</tr>
+				<tr>
+					<th>Email Address:</th>
+					<td th:text="${user.email}"></td>
+				</tr>
+				<tr class="table-success">
+					<th>Phone:</th>
+					<td th:text="${customer.customerPhone}"></td>
+				</tr>
+				<tr>
+					<th>Enabled:</th>
+					<th:block th:if="${user.enabled == 0}">
+						<td>
+							<span class="text-danger" th:text="${'Suspended'}"></span>
+						</td>
+					</th:block>
+					<th:block th:if="${user.enabled == 1}">
+						<td th:text="${'Active'}"></td>
+					</th:block>
+				</tr>
+				<tr class="table-primary">
+					<th>Actions:</th>
+					<th:block th:if="${user.enabled == 1}">
+						<td>
+							<a th:onclick="suspendUser([[${user.id}]])" class="btn btn-danger">Suspend</a>
+						</td>
+					</th:block>
+					<th:block th:if="${user.enabled == 0}">
+						<td>
+							<a th:onclick="reactivateUser([[${user.id}]])" class="btn btn-secondary">Reactivate</a>
+						</td>
+					</th:block>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</th:block>
+
+</html>
