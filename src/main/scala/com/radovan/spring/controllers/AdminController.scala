@@ -153,7 +153,7 @@ class AdminController {
 
   @GetMapping(value = Array("/allCustomers"))
   def getAllCustomers(map: ModelMap): String = {
-    val allCustomers = customerService.getAllCustomers()
+    val allCustomers = customerService.getAllCustomers
     val allUsers = userService.listAllUsers
     map.put("allCustomers", allCustomers)
     map.put("allUsers", allUsers)
@@ -185,7 +185,7 @@ class AdminController {
   @GetMapping(value = Array("/allOrders"))
   def listAllOrders(map: ModelMap): String = {
     val allOrders = orderService.listAll
-    val allCustomers = customerService.getAllCustomers()
+    val allCustomers = customerService.getAllCustomers
     val allUsers = userService.listAllUsers
     map.put("allOrders", allOrders)
     map.put("allCustomers", allCustomers)

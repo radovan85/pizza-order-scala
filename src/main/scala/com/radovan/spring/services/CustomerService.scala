@@ -7,7 +7,7 @@ trait CustomerService {
 
   def storeCustomer(form:RegistrationForm):CustomerDto
 
-  def getAllCustomers():Array[CustomerDto]
+  def getAllCustomers:Array[CustomerDto]
 
   def getCustomerById(customerId:Integer):CustomerDto
 

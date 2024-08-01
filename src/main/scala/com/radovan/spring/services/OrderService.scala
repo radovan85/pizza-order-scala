@@ -12,5 +12,5 @@ trait OrderService {
 
   def listAllByCartId(cartId:Integer):Array[OrderDto]
 
-  def addOrder:OrderDto
+  def addOrder():OrderDto
 }

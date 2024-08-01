@@ -54,7 +54,7 @@ class CartServiceImpl extends CartService{
   }
 
   @Transactional(readOnly = true)
-  override def getMyCart(): CartDto = {
+  override def getMyCart: CartDto = {
     val customer = customerService.getCurrentCustomer
     getCartById(customer.getCartId)
   }

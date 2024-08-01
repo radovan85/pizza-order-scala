@@ -95,7 +95,7 @@ class CustomerServiceImpl extends CustomerService {
   }
 
   @Transactional(readOnly = true)
-  override def getAllCustomers(): Array[CustomerDto] = {
+  override def getAllCustomers: Array[CustomerDto] = {
     val allCustomers = customerRepository.findAll().asScala
     allCustomers.collect{
       case customerEntity => tempConverter.customerEntityToDto(customerEntity)

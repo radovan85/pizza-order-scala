@@ -10,7 +10,7 @@ trait CartService {
 
   def validateCart(cartId:Integer):CartDto
 
-  def getMyCart():CartDto
+  def getMyCart:CartDto
 
   def getCartById(cartId:Integer):CartDto
 }

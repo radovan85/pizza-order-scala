@@ -100,7 +100,7 @@ class OrderController {
 
   @GetMapping(value = Array("/createOrder"))
   def addOrder(): String = {
-    orderService.addOrder
+    orderService.addOrder()
     "fragments/homePage :: fragmentContent"
   }
 

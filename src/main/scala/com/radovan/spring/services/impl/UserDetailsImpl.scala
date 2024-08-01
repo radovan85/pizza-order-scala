@@ -1,4 +1,4 @@
-package com.radovan.spring.service.impl
+package com.radovan.spring.services.impl
 
 import com.radovan.spring.converter.TempConverter
 import com.radovan.spring.services.UserService

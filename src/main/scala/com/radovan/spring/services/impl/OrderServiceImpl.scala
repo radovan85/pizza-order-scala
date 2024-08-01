@@ -76,7 +76,7 @@ class OrderServiceImpl extends OrderService {
   }
 
   @Transactional
-  override def addOrder: OrderDto = {
+  override def addOrder(): OrderDto = {
     var returnValue = new OrderDto
     val customer = customerService.getCurrentCustomer
     val cart = cartService.getCartById(customer.getCartId)
