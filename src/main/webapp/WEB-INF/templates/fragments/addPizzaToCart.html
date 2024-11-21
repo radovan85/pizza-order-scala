@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<th:block th:fragment="fragmentContent">
+
+    <div class="container mt-5 mb-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F;'}">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-10">
+                <div class="card shadow-sm border-light">
+                    <div class="card-body">
+                        <h1 class="card-title text-center mb-4" th:text="${'Add To Cart'}"></h1>
+                        <form th:object="${cartItem}" method="POST" id="cartItemForm">
+
+                            <div class="mb-3">
+                                <label for="pizzaId" class="form-label">Pizza:</label>
+                                <input type="hidden" id="pizzaId" th:value="${pizza.pizzaId}">
+                                <input type="text" class="form-control" th:value="${pizza.name}" readonly>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="pizzaSizeId" class="form-label">Pizza Size</label>
+                                <select name="pizzaSizeId" id="pizzaSizeId" class="form-select">
+                                    <option value="" disabled selected th:text="${'Please Select'}"></option>
+                                    <th:block th:each="pizzaSize : ${allPizzaSizes}">
+                                        <option th:value="${pizzaSize.pizzaSizeId}">
+                                            <span th:text="${pizzaSize.name}"></span> 
+                                            <span>&euro;</span>
+                                            <span th:text="${#numbers.formatDecimal(pizzaSize.price, 0, 2)}"></span>
+                                        </option>
+                                    </th:block>
+                                </select>
+                                <div class="text-danger mt-2" id="pizzaSizeIdError" th:style="${'visibility: hidden;'}"
+                                    th:text="${'Please select 1 of the options!'}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="quantity" class="form-label" th:text="${'Quantity'}"></label>
+                                <input type="text" id="quantity" name="quantity" class="form-control"
+                                    th:placeholder="${'Enter quantity'}" th:onkeypress="return validateNumber(event)" />
+                                <div class="text-danger mt-2" id="quantityError" th:style="${'visibility: hidden;'}"
+                                    th:text="${'Please provide quantity min 1 max 20!'}"></div>
+                            </div>
+
+                            <div class="d-flex justify-content-center">
+                                <button type="button" class="btn btn-success" th:onclick="addPizzaToCart()">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
