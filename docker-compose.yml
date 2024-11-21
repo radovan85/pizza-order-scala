@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    image: pizza-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:postgresql://database:5432/pizza-db
+      DB_USERNAME: postgres
+      DB_PASSWORD: 1111
+  database:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: pizza-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1111
+    ports:
+      - "5432:5432"

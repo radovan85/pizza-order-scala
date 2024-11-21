@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<th:block th:fragment="fragmentContent">
+
+	<div class="container mt-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F; margin-bottom: 100px;'}">
+
+		<th:block th:if="${allCustomers.length == 0}">
+			<div class="text-center">
+				<h2 th:text="${'No customers currently available!'}"></h2>
+				<button class="btn btn-success mt-5" th:onclick="redirectHome()" th:text="${'Home'}"></button>
+			</div>
+		</th:block>
+
+		<th:block th:if="${allCustomers.length > 0}">
+			<div class="row mb-5">
+				<div class="col">
+					<h1 th:text="${'All Registered Users'}"></h1>
+				</div>
+			</div>
+
+			<input type="hidden" id="recordsPerPage" th:value="${recordsPerPage}">
+			<table class="table table-striped table-bordered" id="listingTable">
+				<thead class="table-dark text-center">
+					<tr>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Email Address</th>
+						<th>Enabled</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="tempUser: ${allUsers}">
+						<th:block th:each="tempCustomer : ${allCustomers}">
+							<th:block th:if="${tempCustomer.userId == tempUser.id}">
+								<td class="text-center" th:text="${tempUser.firstName}"></td>
+								<td class="text-center" th:text="${tempUser.lastName}"></td>
+								<td class="text-center" th:text="${tempUser.email}"></td>
+								<th:block th:if="${tempUser.enabled == 0}">
+									<td class="text-center">
+										<span class="text-danger" th:text="${'Suspended'}"></span>
+									</td>
+								</th:block>
+
+								<th:block th:if="${tempUser.enabled == 1}">
+									<td class="text-center" th:text="${'Active'}"></td>
+								</th:block>
+
+								<td class="text-center">
+									<div class="dropdown">
+										<button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown">
+											Actions
+										</button>
+										<ul class="dropdown-menu">
+											<li>
+												<a class="dropdown-item" style="color: green;" 
+													th:onclick="redirectCustomerDetails([[${tempCustomer.customerId}]])">
+													Details
+												</a>
+											</li>
+											<li><hr class="dropdown-divider"></li>
+											<th:block th:if="${tempUser.enabled == 1}">
+												<li>
+													<a class="dropdown-item" style="color: red;" 
+														th:onclick="suspendUser([[${tempUser.id}]])">
+														Suspend
+													</a>
+												</li>
+											</th:block>
+											<th:block th:if="${tempUser.enabled == 0}">
+												<li>
+													<a class="dropdown-item" style="color: green;" 
+														th:onclick="reactivateUser([[${tempUser.id}]])">
+														Reactivate
+													</a>
+												</li>
+											</th:block>
+											<li>
+												<a class="dropdown-item" style="color: #080707; background-color: #ED1427;" 
+													th:onclick="deleteCustomer([[${tempCustomer.customerId}]])">
+													Remove
+												</a>
+											</li>
+										</ul>
+									</div>
+								</td>
+							</th:block>
+						</th:block>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="d-flex justify-content-end">
+				<button class="btn btn-primary me-2" th:onclick="prevPage()" id="btn_prev">Prev</button>
+				<span>Page: <span id="page"></span></span>
+				<button class="btn btn-primary ms-2" th:onclick="nextPage()" id="btn_next">Next</button>
+			</div>
+
+			<script th:src="@{/js/pagination.js}"></script>
+			
+		</th:block>
+	</div>
+</th:block>
+
+</html>

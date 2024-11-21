@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<th:block th:fragment="fragmentContent">
+
+    <div class="container mt-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F; margin-bottom: 100px;'}">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-10">
+                <div class="card shadow-sm">
+                    <div class="card-header text-center bg-primary text-white">
+                        <h1 class="card-title mb-0" th:text="${'Confirm Address'}"></h1>
+                    </div>
+                    <div class="card-body">
+                        <form th:object="${shippingAddress}" method="POST" id="shippingAddressForm">
+                            <input type="hidden" name="shippingAddressId" th:value="${currentAddress.shippingAddressId}" />
+                            <input type="hidden" name="customerId" th:value="${currentAddress.customerId}" />
+
+                            <div class="mb-3">
+                                <label for="city" class="form-label">City</label>
+                                <input type="text" id="city" name="city" class="form-control" th:placeholder="${'Enter Your City'}" th:value="${currentAddress.city}" />
+                                <span class="text-danger" id="cityError" th:style="${'visibility: hidden;'}" th:text="${'Not Empty! Max 40 letters allowed!'}"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="postcode" class="form-label">Post Code</label>
+                                <input type="text" id="postcode" name="postcode" class="form-control" th:placeholder="${'Enter post code'}" th:value="${currentAddress.postcode}" />
+                                <span class="text-danger" id="postcodeError" th:style="${'visibility: hidden;'}" th:text="${'Min 5 and Max 10 letters allowed!'}"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="address" class="form-label" th:text="${'Street & Number'}"></label>
+                                <input type="text" id="address" name="address" class="form-control" th:placeholder="${'Enter Street & Number Of Your Residency'}" th:value="${currentAddress.address}" />
+                                <span class="text-danger" id="addressError" th:style="${'visibility: hidden;'}" th:text="${'Not Empty! Max 75 letters allowed!'}"></span>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn btn-danger" th:onclick="redirectCancelOrder()" th:text="${'Cancel'}"></button>
+                                <button type="button" class="btn btn-success" th:onclick="addressConfirmed()" th:text="${'Continue'}"></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>

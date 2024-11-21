@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<th:block th:fragment="fragmentContent">
+
+    <div class="container mt-5 mb-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F;'}">
+        <div class="jumbotron text-center bg-light p-5 rounded-3 shadow-sm">
+            <h1 class="display-4" th:text="${'Pizza Added To Your Cart'}"></h1>
+        </div>
+
+        <div class="text-center mt-4">
+            <button class="btn btn-secondary me-3" th:onclick="redirectAllPizzasUser()"
+                th:text="${'All Pizzas'}"></button>
+            <button class="btn btn-success" th:onclick="redirectCart()"
+                th:text="${'Cart'}"></button>
+        </div>
+    </div>
+    
+</th:block>

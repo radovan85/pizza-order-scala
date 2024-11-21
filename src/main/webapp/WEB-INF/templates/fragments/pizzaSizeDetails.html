@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<th:block th:fragment="fragmentContent">
+
+    <div class="container mt-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F; margin-bottom: 100px;'}">
+        <div class="row mb-3">
+            <div class="col">
+                <h3>View Pizza Details</h3>
+            </div>
+            <div class="col text-end">
+                <button th:onclick="redirectAllSizes()" class="btn btn-success">
+                    &larr; Back
+                </button>
+            </div>
+        </div>
+
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>Name:</th>
+                    <td th:text="${pizza.name}"></td>
+                </tr>
+                <tr class="table-success">
+                    <th>Size:</th>
+                    <td th:text="${pizzaSize.name}"></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td class="text-center">
+                        <img th:onerror="this.src='https://t4.ftcdn.net/jpg/00/31/38/91/360_F_31389192_BEjagnNVligizqQwN6HvvOqgIJNmhHmj.jpg'"
+                             th:src="@{${pizza.imageUrl}}"
+                             class="img-fluid" 
+                             style="height: 250px; width: 332.5px; object-fit: cover;">
+                    </td>
+                </tr>
+                <tr class="table-success">
+                    <th>Price:</th>
+                    <td>
+                        <span>&euro;</span>
+                        <span th:text="${#numbers.formatDecimal(pizzaSize.price, 0, 2)}"></span>
+                    </td>
+                </tr>
+                <tr class="table-primary">
+                    <th>Actions:</th>
+                    <td>
+                        <div class="d-flex">
+                            <button th:onclick="redirectUpdatePizzaSize([[${pizzaSize.pizzaSizeId}]])"
+                                    class="btn btn-success me-2" th:text="${'Update'}">
+                            </button>
+                            <button th:onclick="deletePizzaSize([[${pizzaSize.pizzaSizeId}]])"
+                                    class="btn btn-danger" th:text="${'Delete'}">
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</th:block>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<th:block th:fragment="fragmentContent">
+
+    <div class="container mt-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F; margin-bottom: 100px;'}">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header text-center bg-primary text-white">
+                        <h1 th:text="${'Receipt'}"></h1>
+                    </div>
+                    <div class="card-body" style="color: #040c2f;">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <address>
+                                    <strong th:text="${'Address'}"></strong><br />
+                                    <span th:text="${shippingAddress.address}"></span><br />
+                                    <span th:text="${shippingAddress.city}"></span>
+                                    <span th:text="${shippingAddress.postcode}"></span>
+                                </address>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-secondary">
+                                    <tr>
+                                        <th class="text-center" th:text="${'Pizza'}"></th>
+                                        <th class="text-center" th:text="${'Size'}"></th>
+                                        <th class="text-center" th:text="${'Quantity'}"></th>
+                                        <th class="text-center" th:text="${'Price'}"></th>
+                                        <th class="text-center" th:text="${'Total'}"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="cartItem : ${allCartItems}">
+                                        <th:block th:each="tempSize : ${allPizzaSizes}">
+                                            <th:block th:each="tempPizza : ${allPizzas}">
+                                                <th:block th:if="${cartItem.pizzaSizeId == tempSize.pizzaSizeId}">
+                                                    <th:block th:if="${tempSize.pizzaId == tempPizza.pizzaId}">
+                                                        <td class="text-center" th:text="${tempPizza.name}"></td>
+                                                        <td class="text-center" th:text="${tempSize.name}"></td>
+                                                        <td class="text-center" th:text="${cartItem.quantity}"></td>
+                                                        <td class="text-center">
+                                                            <span>&euro;</span>
+                                                            <span th:text="${#numbers.formatDecimal(tempSize.price, 0, 2)}"></span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span>&euro;</span>
+                                                            <span th:text="${#numbers.formatDecimal(cartItem.price, 0, 2)}"></span>
+                                                        </td>
+                                                    </th:block>
+                                                </th:block>
+                                            </th:block>
+                                        </th:block>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8 text-center">
+                <h3>
+                    Grand Total Price:
+                    <span>&euro;</span>
+                    <span th:text="${#numbers.formatDecimal(cart.cartPrice, 0, 2)}"></span>
+                </h3>
+                <div class="mt-4">
+                    <button type="button" class="btn btn-success mr-3" th:onclick="redirectPhoneConfirmation()" th:text="${'Back'}"></button>
+                    <button type="button" class="btn btn-danger mr-3" th:onclick="redirectCancelOrder()" th:text="${'Cancel'}"></button>
+                    <button type="button" class="btn btn-success" th:onclick="executeOrder()" th:text="${'Continue'}"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>

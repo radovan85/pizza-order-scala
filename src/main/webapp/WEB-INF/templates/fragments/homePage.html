@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<th:block th:fragment="fragmentContent">
+    <div class="container mt-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F;'}">
+        <div class="row">
+            <th:block sec:authorize="hasAuthority('ADMIN')">
+                <div class="col-12 text-center">
+                    <h1 class="display-4" th:text="${'Admin Dashboard'}"></h1>
+                </div>
+            </th:block>
+
+            <th:block sec:authorize="hasAuthority('ROLE_USER')">
+                <div class="col-12 text-center">
+                    <h1 class="display-4" th:text="${'Customer Dashboard'}"></h1>
+                </div>
+            </th:block>
+        </div>
+    </div>
+</th:block>

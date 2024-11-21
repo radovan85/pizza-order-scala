@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<th:block th:fragment="fragmentContent">
+
+	<div class="container mt-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F; margin-bottom: 100px;'}">
+		<div class="jumbotron text-center py-4 mb-4" style="background-color: #c20e14; color: #d9d9d9;">
+			<h2 th:text="${'All Products in your cart'}"></h2>
+		</div>
+
+		<div class="d-flex justify-content-center mb-5">
+			<button class="btn btn-danger me-3" th:onclick="eraseAllItems([[${cart.cartId}]])" th:text="${'Clear Cart'}"></button>
+			<button class="btn btn-success" th:onclick="redirectValidateCart([[${cart.cartId}]])" th:text="${'Checkout'}"></button>
+		</div>
+
+		<table class="table table-bordered table-hover">
+			<thead class="table-danger text-center">
+				<tr>
+					<th th:text="${'Item Id'}"></th>
+					<th th:text="${'Pizza'}"></th>
+					<th th:text="${'Size'}"></th>
+					<th th:text="${'Unit Price'}"></th>
+					<th th:text="${'Quantity'}"></th>
+					<th th:text="${'Cart Price'}"></th>
+					<th th:text="${'Action'}"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="cartItem : ${allCartItems}">
+					<th:block th:each="tempSize : ${allPizzaSizes}">
+						<th:block th:each="tempPizza : ${allPizzas}">
+							<th:block th:if="${cartItem.pizzaSizeId == tempSize.pizzaSizeId}">
+								<th:block th:if="${tempPizza.pizzaId == tempSize.pizzaId}">
+									<td class="text-center" th:text="${cartItem.cartItemId}"></td>
+									<td class="text-center" th:text="${tempPizza.name}"></td>
+									<td class="text-center" th:text="${tempSize.name}"></td>
+									<td class="text-center">
+										<span>&euro;</span> <span th:text="${#numbers.formatDecimal(tempSize.price, 0, 2)}"></span>
+									</td>
+									<td class="text-center" th:text="${cartItem.quantity}"></td>
+									<td class="text-center">
+										<span>&euro;</span> <span th:text="${#numbers.formatDecimal(cartItem.price, 0, 2)}"></span>
+									</td>
+									<td class="text-center">
+										<button class="btn btn-danger" th:text="${'Remove'}" th:onclick="eraseItem([[${cartItem.cartItemId}]])"></button>
+									</td>
+								</th:block>
+							</th:block>
+						</th:block>
+					</th:block>
+				</tr>
+				<tr>
+					<td colspan="6" class="text-end">
+						<strong th:text="${'Final Price:'}"></strong>
+					</td>
+					<td class="text-center">
+						<strong>
+							<span>&euro;</span> <span th:text="${#numbers.formatDecimal(cart.cartPrice, 0, 2)}"></span>
+						</strong>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="text-center mt-5">
+			<button class="btn btn-success" th:onclick="redirectAllPizzasUser()" th:text="${'Continue Shopping'}"></button>
+		</div>
+	</div>
+</th:block>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<th:block th:fragment="fragmentContent">
+
+    <div class="container mt-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F; margin-bottom: 100px;'}">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-10">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="text-danger mb-3">
+                            <span th:text="${alert}"></span>
+                        </div>
+                        <h1 class="text-center mb-4">Login Page</h1>
+                        <form method="POST" id="loginForm">
+                            <div class="mb-3">
+                                <label for="email" class="form-label" th:text="${'Email Address'}"></label>
+                                <input type="text" name="email" class="form-control" th:placeholder="${'Enter Email Address'}" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label" th:text="${'Password'}"></label>
+                                <input type="password" name="password" class="form-control" th:placeholder="${'Enter Password'}" />
+                            </div>
+                            <div class="d-grid">
+                                <button type="button" class="btn btn-success" th:text="${'Login'}" th:onclick="login()"></button>
+                            </div>
+                            <div class="mt-3 text-center">
+                                <span th:style="${'color: green'}" th:text="${'New User?'}"></span>
+                                <a th:style="${'color: #4475B5;'}"
+                                   th:onmouseover="this.style='cursor: pointer; color: red;'"
+                                   th:onmouseout="this.style='cursor: pointer; color: #4475B5;'"
+                                   th:onclick="redirectRegister()"
+                                   th:text="${'Register here'}"></a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>

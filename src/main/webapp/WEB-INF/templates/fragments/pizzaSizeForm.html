@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<th:block th:fragment="fragmentContent">
+
+    <div class="container mt-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F; margin-bottom: 100px;'}">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-10">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h1 th:text="${'Add Size & Price To Pizza'}"></h1>
+                    </div>
+                    <div class="card-body">
+                        <form th:object="${pizzaSize}" method="POST" id="pizzaSizeForm">
+                            <div class="mb-3">
+                                <label for="pizzaId" class="form-label">Pizza</label>
+                                <select name="pizzaId" id="pizzaId" class="form-select">
+                                    <option th:value="''" th:text="${'Please Select'}"></option>
+                                    <th:block th:each="pizza : ${allPizzas}">
+                                        <option th:text="${pizza.name}" th:value="${pizza.pizzaId}"></option>
+                                    </th:block>
+                                </select>
+                                <span class="text-danger" id="pizzaIdError" th:style="${'visibility: hidden;'}" th:text="${'Please select 1 of the options!'}"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Size</label>
+                                <input type="text" id="name" name="name" class="form-control" th:placeholder="${'Enter Pizza Size'}" />
+                                <span class="text-danger" id="nameError" th:style="${'visibility: hidden;'}" th:text="${'Not Empty! Max 40 letters allowed!'}"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Price</label>
+                                <input type="text" id="price" name="price" class="form-control" th:placeholder="${'Enter Pizza Price'}" th:onkeydown="return validateNumber(event)" />
+                                <span class="text-danger" id="priceError" th:style="${'visibility: hidden;'}" th:text="${'Please provide valid price!'}"></span>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="button" class="btn btn-success" th:text="${'Submit'}" th:onclick="addPizzaSize()"></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
