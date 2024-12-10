@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<th:block th:fragment="fragmentContent">
+
+    <div class="container mt-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F; margin-bottom: 100px;'}">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-10">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h1 th:text="${'Create New Pizza'}"></h1>
+                    </div>
+                    <div class="card-body">
+                        <form th:object="${pizza}" id="pizzaForm" method="POST">
+                            
+                            <div class="mb-3">
+                                <label for="imageUrl" class="form-label" th:text="${'Image Url'}"></label>
+                                <input type="text" id="imageUrl" name="imageUrl" class="form-control" th:placeholder="${'Enter Image Url'}" />
+                                <span class="text-danger" id="imageUrlError" th:style="${'visibility: hidden;'}" th:text="${'Not Empty! Max 255 letters allowed!'}"></span>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="name" class="form-label" th:text="${'Name'}"></label>
+                                <input type="text" id="name" name="name" class="form-control" th:placeholder="${'Enter Pizza Name'}" />
+                                <span class="text-danger" id="nameError" th:style="${'visibility: hidden;'}" th:text="${'Not Empty! Max 40 letters allowed!'}"></span>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="description" class="form-label" th:text="${'Description'}"></label>
+                                <input type="text" id="description" name="description" class="form-control" th:placeholder="${'Enter Description'}" />
+                                <span class="text-danger" id="descriptionError" th:style="${'visibility: hidden;'}" th:text="${'Not Empty! Max 90 letters allowed!'}"></span>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button type="button" class="btn btn-success" th:text="${'Submit'}" th:onclick="addPizza()"></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>

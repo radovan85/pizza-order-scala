@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<th:block th:fragment="fragmentContent">
+
+    <div class="container mt-5" th:style="${'font-family: Oswald, sans-serif; color: #12044F; margin-bottom: 100px;'}">
+
+        <th:block th:if="${allPizzaSizes.length == 0}">
+            <div class="text-center">
+                <h2 th:text="${'No pizza sizes currently available!'}"></h2>
+                <button class="btn btn-success mt-5" th:onclick="redirectAddPizzaSize()" th:text="${'Add Pizza Size'}"></button>
+            </div>
+        </th:block>
+
+        <th:block th:if="${allPizzaSizes.length > 0}">
+            <div class="row mb-3">
+                <div class="col">
+                    <h1>All Pizza Sizes</h1>
+                </div>
+                <div class="col text-end">
+                    <a th:onclick="redirectAllPizzasAdmin()" class="btn btn-success">
+                        &larr; Back to Pizzas
+                    </a>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-lg-3">
+                    <a th:onclick="redirectAddPizzaSize()" class="btn btn-success btn-sm">Add Pizza Size</a>
+                </div>
+            </div>
+
+            <input type="hidden" id="recordsPerPage" th:value="${recordsPerPage}">
+            <table class="table table-striped table-bordered" id="listingTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="text-center">Image</th>
+                        <th class="text-center">Pizza</th>
+                        <th class="text-center">Size</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="pizzaSize : ${allPizzaSizes}">
+                        <th:block th:each="pizza : ${allPizzas}">
+                            <th:block th:if="${pizzaSize.pizzaId == pizza.pizzaId}">
+                                <td class="text-center">
+                                    <img th:onerror="this.src='https://t4.ftcdn.net/jpg/00/31/38/91/360_F_31389192_BEjagnNVligizqQwN6HvvOqgIJNmhHmj.jpg'"
+                                         th:src="@{${pizza.imageUrl}}" 
+                                         class="img-fluid" 
+                                         style="height: 100px; width: 133px; object-fit: cover;">
+                                </td>
+                                <td th:text="${pizza.name}" class="text-center align-middle"></td>
+                                <td th:text="${pizzaSize.name}" class="text-center align-middle"></td>
+                                <td class="text-center align-middle">
+                                    <span>&euro;</span>
+                                    <span th:text="${#numbers.formatDecimal(pizzaSize.price, 0, 2)}"></span>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <div class="dropdown">
+                                        <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown">Actions</button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a class="dropdown-item" th:onclick="redirectUpdatePizzaSize([[${pizzaSize.pizzaSizeId}]])">Update</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" th:onclick="redirectPizzaSizeDetails([[${pizzaSize.pizzaSizeId}]])">Details</a>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li>
+                                                <a class="dropdown-item text-danger" th:onclick="deletePizzaSize([[${pizzaSize.pizzaSizeId}]])">Delete</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </th:block>
+                        </th:block>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-secondary me-2" th:onclick="prevPage()" id="btn_prev">Prev</button>
+                <span class="align-self-center">page: <span id="page"></span></span>
+                <button class="btn btn-secondary ms-2" th:onclick="nextPage()" id="btn_next">Next</button>
+            </div>
+
+            <script th:src="@{/js/pagination.js}"></script>
+        </th:block>
+    </div>
+
+</th:block>
+
+</html>
